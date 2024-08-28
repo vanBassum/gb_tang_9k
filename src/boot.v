@@ -18,10 +18,11 @@ wire [7:0] boot_outdata;
 wire boot_preload;
 
 bootrom bootrom (
-    .address(boot_address[7:0]),
-    .clockgb(clockgb),
-    .outdata(boot_outdata)
+    .ad(boot_address[7:0]),
+    //.clockgb(clockgb),
+    .dout(boot_outdata)
 );
+
 
 mmap #(16'h0000, 16'h00ff) rom_mmap (
     .clockgb(clockgb),

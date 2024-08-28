@@ -1,136 +1,134 @@
-//
-// UART interface
-//
-
 module uarttx(
-    clock115200hz, resetn, data, send, ready,
-    UART_TX
+    input clock115200hz,
+    input resetn,
+    input [7:0] data,
+    input send,
+    output reg ready,
+    output UART_TX
 );
 
-input clock115200hz;
-input resetn;
-input [7:0] data;
-input send;
-output reg ready;
-output UART_TX = tx;
+    reg tx;
+    reg [3:0] state;
+    reg [7:0] shift_reg;
 
-reg tx;
-reg [3:0] state;
+    assign UART_TX = tx;
 
-always @(posedge clock115200hz or negedge resetn) begin
-    if (!resetn) begin
-        tx <= 1'b1;
-        ready <= 0;
-        state <= 0;
-    end else begin
-        if (state == 0) begin
-            tx <= 1'b1;
-            ready <= send ? 1'b0 : 1'b1;
-            state <= send ? 4'h1 : 4'h0;
+    always @(posedge clock115200hz or negedge resetn) begin
+        if (!resetn) begin
+            tx <= 1'b1; // Idle state for UART TX is high
+            ready <= 1'b1;
+            state <= 4'h0;
         end else begin
-            tx <= state == 4'h1 ? 1'b0 : data[state-2];
-            state <= state == 4'h9 ? 4'h0 : state + 1'b1;
+            case (state)
+                4'h0: begin
+                    tx <= 1'b1; // Idle state
+                    ready <= send ? 1'b0 : 1'b1;
+                    state <= send ? 4'h1 : 4'h0;
+                end
+                4'h1: begin
+                    tx <= 1'b0; // Start bit
+                    shift_reg <= data;
+                    state <= 4'h2;
+                end
+                4'h2, 4'h3, 4'h4, 4'h5, 4'h6, 4'h7, 4'h8: begin
+                    tx <= shift_reg[state - 2];
+                    state <= state + 1'b1;
+                end
+                4'h9: begin
+                    tx <= 1'b1; // Stop bit
+                    state <= 4'h0;
+                end
+                default: state <= 4'h0;
+            endcase
         end
     end
-end
 
 endmodule
 
-
 module cheapuartrx(
-    clock115200hz, resetn, data, recv,
-    UART_RX
+    input clock115200hz,
+    input resetn,
+    output reg [7:0] data,
+    output reg recv,
+    input UART_RX
 );
 
-input clock115200hz;
-input resetn;
-output reg [7:0] data;
-output reg recv;
-input UART_RX;
+    reg [3:0] state;
+    reg [7:0] buffer;
+    wire rx = UART_RX;
 
-wire rx = UART_RX;
-reg [3:0] state;
-reg [7:0] buffer;
-
-always @(posedge clock115200hz or negedge resetn) begin
-    if (!resetn) begin
-        data <= 0;
-        recv <= 0;
-        state <= 0;
-    end else begin
-        if (state == 0) begin
+    always @(posedge clock115200hz or negedge resetn) begin
+        if (!resetn) begin
+            data <= 8'b0;
             recv <= 1'b0;
-            state <= rx == 1'b0 ? 4'h1 : 4'h0;
-        end else if (state != 9) begin
-            buffer[state-1] <= rx;
-            state <= state + 1'b1;
-        end else begin
-            data <= buffer;
-            recv <= 1'b1;
             state <= 4'h0;
-        end 
+        end else begin
+            case (state)
+                4'h0: begin
+                    recv <= 1'b0;
+                    state <= (rx == 1'b0) ? 4'h1 : 4'h0; // Detect start bit
+                end
+                4'h1: begin
+                    buffer <= {rx, buffer[7:1]};
+                    state <= (buffer[0] == 1'b1) ? 4'h2 : 4'h1;
+                end
+                4'h2: begin
+                    data <= buffer;
+                    recv <= 1'b1;
+                    state <= 4'h0;
+                end
+                default: state <= 4'h0;
+            endcase
+        end
     end
-end
 
 endmodule
 
 
 module uartrx(
-    clock460800, resetn, data, recv,
-    UART_RX
+    input clock460800,
+    input resetn,
+    output reg [7:0] data,
+    output reg recv,
+    input UART_RX
 );
 
-input clock460800;
-input resetn;
-output reg [7:0] data;
-output reg recv;
-input UART_RX;
+    reg [3:0] state;
+    reg [2:0] bit_count;
+    reg [7:0] shift_reg;
+    wire rx = UART_RX;
 
-wire rx = UART_RX;
-reg [3:0] state;
-reg [1:0] step;
-reg [7:0] buffer;
-reg [2:0] count;
-
-always @(posedge clock460800 or negedge resetn) begin
-    if (!resetn) begin
-        data <= 0;
-        recv <= 0;
-        state <= 0;
-    end else begin
-        if (state == 0) begin
+    always @(posedge clock460800 or negedge resetn) begin
+        if (!resetn) begin
+            data <= 8'b0;
             recv <= 1'b0;
-            state <= rx == 1'b0 ? 4'h1 : 4'h0;
-            step <= 1'h1;
-        end else if (state == 1) begin
-            if (step != 2'h3) begin
-                step <= step + 1'b1;
-            end else begin
-                state <= state + 1'b1;
-                count <= 0;
-                step <= 0;
-            end
-        end else if (state != 10) begin
-            if (step != 2'h3) begin
-                count <= count + rx;
-                step <= step + 1'b1;
-            end else begin
-                buffer[state-2] <= (count+rx) > 2;
-                state <= state + 1'b1;
-                count <= 0;
-                step <= 0;
-            end
+            state <= 4'h0;
+            bit_count <= 3'b0;
         end else begin
-            data <= buffer;
-            recv <= 1'b1;
-            
-            if (step != 2'h3) begin
-                step <= step + 1'b1;
-            end else begin
-                state <= 4'h0;
-            end
-        end 
+            case (state)
+                4'h0: begin
+                    recv <= 1'b0;
+                    if (rx == 1'b0) begin
+                        state <= 4'h1; // Start bit detected
+                        bit_count <= 3'b0;
+                    end
+                end
+                4'h1: begin
+                    shift_reg[bit_count] <= rx;
+                    bit_count <= bit_count + 1'b1;
+                    if (bit_count == 7) begin
+                        state <= 4'h2; // Data bits received
+                    end
+                end
+                4'h2: begin
+                    data <= shift_reg;
+                    recv <= 1'b1;
+                    state <= 4'h0;
+                end
+                default: state <= 4'h0;
+            endcase
+        end
     end
-end
 
 endmodule
+

@@ -1,15 +1,24 @@
 module ppu(
-    clock25mhz, clockgb, hard_resetn, resetn, vblank_int, lcdc_int,
-    address, indata, outdata, load, store,
-    
-	//////////// HDMI-TX //////////
-	HDMI_TX_CLK,
-	HDMI_TX_D,
-	HDMI_TX_DE,
-	HDMI_TX_HS,
-	HDMI_TX_INT,
-	HDMI_TX_VS,
-    dmode
+    input clock25mhz, 
+    input clockgb, 
+    input hard_resetn, 
+    input resetn, 
+    output reg vblank_int, 
+    output reg lcdc_int,
+    input [15:0] address,
+    input [7:0] indata,
+    output [7:0] outdata,
+    input load,
+    input store,
+
+    // HDMI Outputs
+    output HDMI_TX_CLK,
+    output [23:0] HDMI_TX_D,
+    output HDMI_TX_DE,
+    output HDMI_TX_HS,
+    output HDMI_TX_VS,
+    input HDMI_TX_INT,
+    output [7:0] dmode
 );
 
 parameter WIDTH = 160;
@@ -23,64 +32,45 @@ parameter MODE1_COUNT = 4560;
 
 parameter SPRITE_COUNT = 40;
 
-
-input clock25mhz;
-input clockgb;
-input hard_resetn;
-input resetn;
-output reg vblank_int;
-output reg lcdc_int;
-
-input [15:0] address;
-input [7:0] indata;
-output [7:0] outdata;
-input load;
-input store;
-
-output HDMI_TX_CLK;
-output [23:0] HDMI_TX_D;
-output HDMI_TX_DE;
-output HDMI_TX_HS;
-output HDMI_TX_VS;
-input HDMI_TX_INT;
-
-output [7:0] dmode = ppu_mode;
-
+reg [7:0] gbm_palette [0:2];
+reg [15:0] gbm_color [0:1];
+wire [1:0] gbm_shade;
+wire [7:0] ppu_mode = (ppu_y[0] < HEIGHT) ? ppu_state : 2'h1;
 
 wire [7:0] x;
 wire [7:0] y;
 wire [7:0] r;
 wire [7:0] g;
 wire [7:0] b;
-  
-hdmi #(4) display(
-    clock25mhz, hard_resetn,
-    x, y,
-    r, g, b,
-    
-	//////////// HDMI-TX //////////
-	HDMI_TX_CLK,
-	HDMI_TX_D,
-	HDMI_TX_DE,
-	HDMI_TX_HS,
-	HDMI_TX_INT,
-	HDMI_TX_VS
-);
 
+hdmi #(4) display(
+    .clock25mhz(clock25mhz), 
+    .hard_resetn(hard_resetn),
+    .x(x), 
+    .y(y),
+    .r(r), 
+    .g(g), 
+    .b(b),
+    .HDMI_TX_CLK(HDMI_TX_CLK),
+    .HDMI_TX_D(HDMI_TX_D),
+    .HDMI_TX_DE(HDMI_TX_DE),
+    .HDMI_TX_HS(HDMI_TX_HS),
+    .HDMI_TX_VS(HDMI_TX_VS),
+    .HDMI_TX_INT(HDMI_TX_INT)
+);
 
 wire [5:0] p_id;
 wire [15:0] p_color = gbm_color[1];
 
 vram vram(
-	ppu_id,
-	{y, x},
-	clock25mhz,
-	{ppu_y[3], ppu_x[3]},
-	clockgb,
-	ppu_y[3] < HEIGHT && lcdc[7],
-	p_id
+    .ppu_id(ppu_id),
+    .coords({y, x}),
+    .clock25mhz(clock25mhz),
+    .coords_valid({ppu_y[3], ppu_x[3]}),
+    .clockgb(clockgb),
+    .valid(ppu_y[3] < HEIGHT && lcdc[7]),
+    .p_id(p_id)
 );
-
 
 reg [7:0] gbm_palette [3];
 reg [15:0] gbm_color [2];
@@ -105,27 +95,26 @@ assign b = {p_color[14:10], 2'h0};
 
 
 
-reg [7:0] sprites [SPRITE_COUNT] [4];
+reg [7:0] sprites [0:SPRITE_COUNT-1] [0:3];
 
-reg [7:0] sprite_tile [SPRITE_COUNT];
-reg [2:0] sprite_x [SPRITE_COUNT] [3];
-reg [3:0] sprite_y [SPRITE_COUNT] [3];
-reg [3:0] sprite_pal [SPRITE_COUNT] [3];
-reg sprite_pri [SPRITE_COUNT] [3];
-reg sprite_val [SPRITE_COUNT] [3];
+reg [7:0] sprite_tile [0:SPRITE_COUNT-1];
+reg [2:0] sprite_x [0:SPRITE_COUNT-1] [0:3];
+reg [3:0] sprite_y [0:SPRITE_COUNT-1] [0:3];
+reg [3:0] sprite_pal [0:SPRITE_COUNT-1] [0:3];
+reg sprite_pri [0:SPRITE_COUNT-1] [0:3];
+reg sprite_val [0:SPRITE_COUNT-1] [0:3];
 
-reg [5:0] sprite_id [SPRITE_COUNT];
+reg [5:0] sprite_id [0:SPRITE_COUNT-1];
 
 always @(*) begin
-    integer i;
-    for (i=0; i < SPRITE_COUNT; i=i+1) begin
+    for (integer i=0; i < SPRITE_COUNT; i=i+1) begin
         sprite_id[i] = {sprite_pal[i][2], sprite_pid[i]};
     end
 end
 
 always @(posedge clockgb) begin
-    integer i;
-    for (i=0; i < SPRITE_COUNT; i=i+1) begin
+    //integer i;
+    for (integer i=0; i < SPRITE_COUNT; i=i+1) begin
         sprite_x[i][1] <= sprite_x[i][0];
         sprite_y[i][1] <= sprite_y[i][0];
         sprite_pal[i][1] <= sprite_pal[i][0];
@@ -168,12 +157,11 @@ always @(posedge clockgb) begin
     end
 end
 
-
 wire [7:0] bg_xpre = ppu_x[0] + scrollx;
 wire [7:0] bg_ypre = ppu_y[0] + scrolly;
-reg [2:0] bg_x [3];
-reg [2:0] bg_y [3];
-reg [3:0] bg_pal [3];
+reg [2:0] bg_x [0:2];
+reg [2:0] bg_y [0:2];
+reg [3:0] bg_pal [0:2];
 wire [7:0] bg_tile;
 wire [5:0] bg_id = {bg_pal[2], bg_pid};
 
@@ -189,13 +177,12 @@ always @(posedge clockgb) begin
     bg_pal[2] <= bg_pal[1];
 end
 
-
 wire [7:0] w_xpre = ppu_x[0] - (wx-8'd7);
 wire [7:0] w_ypre = ppu_y[0] - wy;
-reg [2:0] w_x [3];
-reg [2:0] w_y [3];
-reg [3:0] w_pal [3];
-reg w_val [3];
+reg [2:0] w_x [0:2];
+reg [2:0] w_y [0:2];
+reg [3:0] w_pal [0:2];
+reg w_val [0:2];
 wire [7:0] w_tile;
 wire [5:0] w_id = {w_pal[2], w_pid};
 
@@ -213,7 +200,6 @@ always @(posedge clockgb) begin
     w_pal[2] <= w_pal[1];
     w_val[2] <= w_val[1];
 end
-
 
 reg [10:0] bg_address;
 reg [10:0] w_address;
@@ -262,12 +248,13 @@ mmap #(16'h9800, 16'hbfff) bg_mmap(
 );
 
 
-reg [11:0] sprite_tile_offset [SPRITE_COUNT];
+reg [11:0] sprite_tile_offset [0:SPRITE_COUNT-1];
 reg [11:0] bg_tile_offset;
 reg [11:0] w_tile_offset;
+integer i;
 
 always @(*) begin
-    integer i;
+    
     
     if (tile_store || tile_load) begin
         for (i=0; i < SPRITE_COUNT; i=i+1) begin
@@ -299,9 +286,9 @@ always @(*) begin
     end
 end
 
-wire [7:0] sprite_hi [SPRITE_COUNT];
-wire [7:0] sprite_lo [SPRITE_COUNT];
-reg [1:0] sprite_pid [SPRITE_COUNT];
+wire [7:0] sprite_hi [0:SPRITE_COUNT-1];
+wire [7:0] sprite_lo [0:SPRITE_COUNT-1];
+reg [1:0] sprite_pid [0:SPRITE_COUNT-1];
 wire [7:0] bg_hi;
 wire [7:0] bg_lo;
 reg [1:0] bg_pid;
@@ -310,8 +297,7 @@ wire [7:0] w_lo;
 reg [1:0] w_pid;
 
 always @(*) begin  
-    integer i;
-    for (i=0; i < SPRITE_COUNT; i=i+1) begin
+    for (integer i=0; i < SPRITE_COUNT; i=i+1) begin
         sprite_pid[i] = {sprite_hi[i][3'd7-sprite_x[i][2]], sprite_lo[i][3'd7-sprite_x[i][2]]};
     end
     bg_pid = {bg_hi[3'd7-bg_x[2]], bg_lo[3'd7-bg_x[2]]};
@@ -319,8 +305,7 @@ always @(*) begin
 end
 
 generate
-genvar i;
-    for (i=0; i < SPRITE_COUNT; i=i+1) begin : SPRITE_TILE_LOOP
+    for (genvar i=0; i < SPRITE_COUNT; i=i+1) begin : SPRITE_TILE_LOOP
         tram sprite_tram(
             sprite_tile_offset[i],
             tile_bytes,
@@ -351,7 +336,7 @@ tram w_tram(
 );
 
 wire [15:0] tile_address;
-reg [15:0] tile_postaddress [2];
+reg [15:0] tile_postaddress [0:1];
 wire [1:0] tile_bytes = tile_address[0] ? 2'b10 : 2'b01;
 wire [7:0] tile_indata;
 wire [7:0] tile_outdata = tile_postaddress[1][0] ? bg_hi : bg_lo;
@@ -371,20 +356,17 @@ mmap #(16'h8000, 16'h97ff) tile_mmap(
     tile_address, tile_indata, tile_outdata, tile_load, tile_store
 );
 
-
 reg [5:0] ppu_id;
 reg [5:0] topsprite_id;
 reg topsprite_val;
 reg topsprite_pri;
 
 always @(*) begin
-    integer i;
-
     topsprite_id = 0;
     topsprite_val = 0;
     topsprite_pri = 0;
     
-    for (i=SPRITE_COUNT-1; i >= 0; i=i-1) begin
+    for (integer i=SPRITE_COUNT-1; i >= 0; i=i-1) begin
         if (sprite_val[i][2] && sprite_id[i][1:0] != 0) begin
             topsprite_id = sprite_id[i];
             topsprite_pri = sprite_pri[i][2];
@@ -406,11 +388,9 @@ always @(*) begin
         ppu_id = 0;
     end
 end
-    
 
-
-reg [7:0] ppu_x [4];
-reg [7:0] ppu_y [4];
+reg [7:0] ppu_x [0:3];
+reg [7:0] ppu_y [0:3];
 
 reg [1:0] ppu_state;
 reg [15:0] ppu_count;
@@ -428,13 +408,11 @@ reg [7:0] wy;
 reg [7:0] wx;
 
 always @(posedge clockgb or negedge resetn) begin
-    integer i;
-
     if (!resetn) begin
         ppu_state <= 2'h2;
         ppu_count <= 0;
         
-        for (i=0; i < 4; i=i+1) begin
+        for (integer i=0; i < 4; i=i+1) begin
             ppu_x[i] <= 0;
             ppu_y[i] <= 0;
         end
