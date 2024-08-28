@@ -4,7 +4,7 @@ module boot (
 
     input [15:0] address,
     input [7:0] indata,
-    output reg [7:0] outdata,
+    output [7:0] outdata,
     input load,
     input store,
 
@@ -25,16 +25,16 @@ bootrom bootrom (
 
 
 mmap #(16'h0000, 16'h00ff) rom_mmap (
-    .clockgb(clockgb),
-    .resetn(resetn),
-    .address(address),
-    .indata(indata),
-    .outdata(outdata),
-    .load(load),
-    .store(store),
-    .boot_address(boot_address),
-    .boot_outdata(boot_outdata),
-    .boot_preload(boot_preload)
+    .clock         (clockgb     ),
+    .resetn        (resetn      ),
+    .m_address     (address     ),
+    .m_indata      (indata      ),
+    .m_outdata     (outdata     ),
+    .m_load        (load        ),
+    .m_store       (store       ),
+    .address       (boot_address),
+    .outdata       (boot_outdata),
+    .load          (boot_preload)
 );
 
 reg boot_enabled;
@@ -58,13 +58,13 @@ end
 wire disable_store;
 
 rrmmap #(16'hff50) disable_mmap (
-    .clockgb(clockgb),
-    .resetn(resetn),
-    .address(address),
-    .indata(indata),
-    .load(load),
-    .store(store),
-    .disable_store(disable_store)
+    .clock        (clockgb      ),
+    .resetn       (resetn       ),
+    .m_address    (address      ),
+    .m_indata     (indata       ),
+    .m_load       (load         ),
+    .m_store      (store        ),
+    .store        (disable_store )
 );
 
 endmodule

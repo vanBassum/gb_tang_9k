@@ -45,7 +45,7 @@ wire [7:0] b;
 
 hdmi #(4) display(
     .clock25mhz(clock25mhz), 
-    .hard_resetn(hard_resetn),
+    .resetn(hard_resetn),
     .x(x), 
     .y(y),
     .r(r), 
