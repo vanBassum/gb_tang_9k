@@ -363,19 +363,20 @@ end
 
 
 
-reg [7:0] nr1 [5];
-reg [7:0] nr2 [5];
-reg [7:0] nr3 [5];
-reg [7:0] nr4 [5];
+reg [7:0] nr1 [0:4];
+reg [7:0] nr2 [0:4];
+reg [7:0] nr3 [0:4];
+reg [7:0] nr4 [0:4];
 
-reg [3:0] wave_table [32];
+reg [3:0] wave_table [0:31];
 
 reg [7:0] nr50;
 reg [7:0] nr51;
 reg [7:0] nr52;
 
+//integer i;
+
 always @(posedge clockgb or negedge resetn) begin
-    integer i;
     
     if (!resetn) begin
         nr1[0] <= 8'h80;

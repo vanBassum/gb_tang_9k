@@ -1,15 +1,19 @@
-module hdmi(
-    clock25mhz, resetn,
-    x, y,
-    r, g, b,
-    
-	//////////// HDMI-TX //////////
-	HDMI_TX_CLK,
-	HDMI_TX_D,
-	HDMI_TX_DE,
-	HDMI_TX_HS,
-	HDMI_TX_INT,
-	HDMI_TX_VS
+module hdmi (
+    input clock25mhz,
+    input resetn,
+    output reg [11:0] x,
+    output reg [11:0] y,
+    input [7:0] r,
+    input [7:0] g,
+    input [7:0] b,
+
+    //////////// HDMI-TX //////////
+    output HDMI_TX_CLK,
+    output [23:0] HDMI_TX_D,
+    output HDMI_TX_DE,
+    output HDMI_TX_HS,
+    output HDMI_TX_VS,
+    input HDMI_TX_INT
 );
 
 parameter CYCLE_DELAY = 0;
@@ -20,8 +24,8 @@ parameter XDIV = 3;
 parameter YDIV = 3;
 parameter XSTART = 80;
 parameter YSTART = 24;
-parameter XEND = XSTART + XDIV*WIDTH;
-parameter YEND = YSTART + YDIV*HEIGHT;
+parameter XEND = XSTART + XDIV * WIDTH;
+parameter YEND = YSTART + YDIV * HEIGHT;
 
 parameter HSIZE = 640;
 parameter VSIZE = 480;
@@ -34,27 +38,16 @@ parameter VSTART = 34;
 parameter HEND = HSTART + HSIZE;
 parameter VEND = VSTART + VSIZE;
 
-
-input clock25mhz;
-input resetn;
-output reg [11:0] x;
-output reg [11:0] y;
-input [7:0] r;
-input [7:0] g;
-input [7:0] b;
-
-output HDMI_TX_CLK = ~clock25mhz;
-output [23:0] HDMI_TX_D = hdmi_data;
-output HDMI_TX_DE = hdmi_de[1];
-output HDMI_TX_HS = hdmi_hsync[1];
-output HDMI_TX_VS = hdmi_vsync[1];
-input HDMI_TX_INT;
-
+assign HDMI_TX_CLK = ~clock25mhz;
+assign HDMI_TX_D = hdmi_data;
+assign HDMI_TX_DE = hdmi_de[1];
+assign HDMI_TX_HS = hdmi_hsync[1];
+assign HDMI_TX_VS = hdmi_vsync[1];
 
 reg [23:0] hdmi_data;
-reg hdmi_de [2];
-reg hdmi_hsync [2];
-reg hdmi_vsync [2];
+reg hdmi_de[1:0];
+reg hdmi_hsync[1:0];
+reg hdmi_vsync[1:0];
 
 reg [11:0] hdmi_hprecount;
 reg [11:0] hdmi_vprecount;
@@ -98,11 +91,10 @@ always @(posedge clock25mhz or negedge resetn) begin
     end
 end
 
-
-wire xactive = hdmi_hcount >= HSTART+XSTART && hdmi_hcount < HSTART+XEND;
-wire yactive = hdmi_vcount >= VSTART+YSTART && hdmi_vcount < VSTART+YEND;
-wire xsetup = hdmi_hcount >= HSTART+XSTART-CYCLE_DELAY && hdmi_hcount < HSTART+XEND-CYCLE_DELAY;
-wire ysetup = hdmi_vcount >= VSTART+YSTART && hdmi_vcount < VSTART+YEND;
+wire xactive = hdmi_hcount >= HSTART + XSTART && hdmi_hcount < HSTART + XEND;
+wire yactive = hdmi_vcount >= VSTART + YSTART && hdmi_vcount < VSTART + YEND;
+wire xsetup = hdmi_hcount >= HSTART + XSTART - CYCLE_DELAY && hdmi_hcount < HSTART + XEND - CYCLE_DELAY;
+wire ysetup = hdmi_vcount >= VSTART + YSTART && hdmi_vcount < VSTART + YEND;
 
 reg [$clog2(XDIV)-1:0] xcount;
 reg [$clog2(YDIV)-1:0] ycount;
@@ -147,4 +139,3 @@ always @(posedge clock25mhz or negedge resetn) begin
 end
 
 endmodule
-

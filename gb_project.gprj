@@ -1,0 +1,29 @@
+<?xml version="1" encoding="UTF-8"?>
+<!DOCTYPE gowin-fpga-project>
+<Project>
+    <Template>FPGA</Template>
+    <Version>5</Version>
+    <Device name="GW1NR-9C" pn="GW1NR-LV9QN88PC6/I5">gw1nr9c-004</Device>
+    <FileList>
+        <File path="src/apu.v" type="file.verilog" enable="1"/>
+        <File path="src/audio.v" type="file.verilog" enable="1"/>
+        <File path="src/boot.v" type="file.verilog" enable="1"/>
+        <File path="src/div.v" type="file.verilog" enable="1"/>
+        <File path="src/dma.v" type="file.verilog" enable="1"/>
+        <File path="src/hdmi.v" type="file.verilog" enable="1"/>
+        <File path="src/inthandle.v" type="file.verilog" enable="1"/>
+        <File path="src/joypad.v" type="file.verilog" enable="1"/>
+        <File path="src/link.v" type="file.verilog" enable="1"/>
+        <File path="src/mbc1.v" type="file.verilog" enable="1"/>
+        <File path="src/mmap.v" type="file.verilog" enable="1"/>
+        <File path="src/ppu.v" type="file.verilog" enable="1"/>
+        <File path="src/seg7.v" type="file.verilog" enable="1"/>
+        <File path="src/sram.v" type="file.verilog" enable="1"/>
+        <File path="src/timer.v" type="file.verilog" enable="1"/>
+        <File path="src/top.v" type="file.verilog" enable="1"/>
+        <File path="src/uart.v" type="file.verilog" enable="1"/>
+        <File path="src/z80.v" type="file.verilog" enable="1"/>
+        <File path="src/z80_alu.v" type="file.verilog" enable="1"/>
+        <File path="src/z80_ucode.v" type="file.verilog" enable="1"/>
+    </FileList>
+</Project>

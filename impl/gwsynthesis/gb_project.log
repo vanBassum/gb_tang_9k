@@ -1,0 +1,102 @@
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\apu.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\audio.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\boot.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\div.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\dma.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\hdmi.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\inthandle.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\joypad.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\link.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\mbc1.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\mmap.v'
+ERROR (EX3183) : Parameter initial value cannot be omitted in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\mmap.v":7)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\mmap.v":25)
+ERROR (EX3928) : Module 'mmap' is ignored due to previous errors("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\mmap.v":57)
+ERROR (EX3183) : Parameter initial value cannot be omitted in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\mmap.v":66)
+ERROR (EX3928) : Module 'rmmap' is ignored due to previous errors("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\mmap.v":109)
+ERROR (EX3183) : Parameter initial value cannot be omitted in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\mmap.v":118)
+ERROR (EX3928) : Module 'rrmmap' is ignored due to previous errors("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\mmap.v":152)
+Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\mmap.v' ignored due to errors
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v'
+Undeclared symbol 'ppu_id', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":75)
+ERROR (EX3620) : Declarations are not allowed in an unnamed block("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":120)
+ERROR (EX3620) : Declarations are not allowed in an unnamed block("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":127)
+Undeclared symbol 'bgram_indata', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":246)
+Undeclared symbol 'bgram_store', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":247)
+WARN  (EX3638) : 'bgram_indata' is already implicitly declared on line 246("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":252)
+WARN  (EX3638) : 'bgram_store' is already implicitly declared on line 247("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":256)
+ERROR (EX3620) : Declarations are not allowed in an unnamed block("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":270)
+ERROR (EX3620) : Declarations are not allowed in an unnamed block("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":313)
+Undeclared symbol 'tile_bytes', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":326)
+Undeclared symbol 'tile_indata', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":328)
+Undeclared symbol 'tile_store', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":329)
+Undeclared symbol 'tile_bytes', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":337)
+Undeclared symbol 'tile_indata', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":339)
+Undeclared symbol 'tile_store', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":340)
+WARN  (EX3638) : 'tile_bytes' is already implicitly declared on line 337("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":355)
+WARN  (EX3638) : 'tile_indata' is already implicitly declared on line 339("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":356)
+WARN  (EX3638) : 'tile_store' is already implicitly declared on line 340("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":360)
+WARN  (EX3638) : 'ppu_id' is already implicitly declared on line 75("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":375)
+ERROR (EX3620) : Declarations are not allowed in an unnamed block("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":381)
+ERROR (EX3620) : Declarations are not allowed in an unnamed block("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":431)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":47)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":85)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":86)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":108)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":110)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":111)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":112)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":113)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":114)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":115)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":117)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":174)
+ERROR (EX3588) : Single value range is not allowed in this mode of Verilog("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\ppu.v":175)
+Sorry, too many errors..
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\seg7.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\sram.v'
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\sram.v":36)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\sram.v":38)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\sram.v":39)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\sram.v":40)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\sram.v":41)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\sram.v":42)
+ERROR (EX3928) : Module 'sram' is ignored due to previous errors("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\sram.v":117)
+Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\sram.v' ignored due to errors
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\timer.v'
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\timer.v":9)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\timer.v":17)
+ERROR (EX3928) : Module 'timer' is ignored due to previous errors("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\timer.v":122)
+Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\timer.v' ignored due to errors
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\uart.v'
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\uart.v":15)
+ERROR (EX3928) : Module 'uarttx' is ignored due to previous errors("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\uart.v":37)
+ERROR (EX3928) : Module 'cheapuartrx' is ignored due to previous errors("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\uart.v":75)
+ERROR (EX3928) : Module 'uartrx' is ignored due to previous errors("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\uart.v":136)
+Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\uart.v' ignored due to errors
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80.v'
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80.v":11)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80.v":21)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80.v":22)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80.v":23)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80.v":24)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80.v":25)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80.v":26)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80.v":27)
+ERROR (EX3246) : Invalid initialization in declaration("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80.v":28)
+ERROR (EX3928) : Module 'z80' is ignored due to previous errors("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80.v":305)
+Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80.v' ignored due to errors
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80_alu.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\z80_ucode.v'
+Analyzing Verilog file 'C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\top.v'
+Undeclared symbol 'cpu_address', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\top.v":312)
+Undeclared symbol 'cpu_outdata', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\top.v":312)
+Undeclared symbol 'cpu_load', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\top.v":312)
+Undeclared symbol 'cpu_store', assumed default net type 'wire'("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\top.v":312)
+WARN  (EX3638) : 'cpu_address' is already implicitly declared on line 312("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\top.v":334)
+WARN  (EX3638) : 'cpu_outdata' is already implicitly declared on line 312("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\top.v":335)
+WARN  (EX3638) : 'cpu_load' is already implicitly declared on line 312("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\top.v":337)
+WARN  (EX3638) : 'cpu_store' is already implicitly declared on line 312("C:\Gowin\Gowin_V1.9.9.03_Education_x64\IDE\bin\Documents\gb_project\src\top.v":338)
+GowinSynthesis finish

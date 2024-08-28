@@ -1,26 +1,18 @@
-module joypad(
-    clock460800hz, clockgb, resetn, joy_int,
-    address, indata, outdata, load, store,
-    
-    //////////// Uart to USB //////////
-    UART_RX,
-    UART_TX
+module joypad (
+    input clock460800hz,
+    input clockgb,
+    input resetn,
+    output reg joy_int,
+    input [15:0] address,
+    input [7:0] indata,
+    output [7:0] outdata,
+    input load,
+    input store,
+    input UART_RX,
+    output UART_TX
 );
 
-input clock460800hz;
-input clockgb;
-input resetn;
-output reg joy_int;
-
-input [15:0] address;
-input [7:0] indata;
-output [7:0] outdata;
-input load;
-input store;
-
-input UART_RX;
-output UART_TX = 1'b1;
-
+assign UART_TX = 1'b1;
 
 reg [1:0] joy_sel;
 reg [7:0] joy_buttons;
@@ -39,22 +31,24 @@ always @(*) begin
     end
 end
 
-
 wire [7:0] uart_data;
 wire uart_recv;
 
-uartrx uartrx(
-    clock460800hz, resetn, uart_data, uart_recv,
-    UART_RX
+uartrx uartrx (
+    .clock460800hz(clock460800hz),
+    .resetn(resetn),
+    .uart_data(uart_data),
+    .uart_recv(uart_recv),
+    .UART_RX(UART_RX)
 );
 
 always @(posedge clockgb or negedge resetn) begin
     if (!resetn) begin
-        joy_sel <= 0;
-        joy_buttons <= 0;
-        joy_int <= 0;
+        joy_sel <= 2'b0;
+        joy_buttons <= 8'b0;
+        joy_int <= 1'b0;
     end else begin
-        joy_int <= 0;
+        joy_int <= 1'b0;
     
         if (joy_store) begin
             joy_sel <= joy_indata[5:4];
@@ -70,14 +64,20 @@ always @(posedge clockgb or negedge resetn) begin
     end
 end
 
-
 wire [7:0] joy_indata;
 wire joy_store;
 
-rrmmap #(16'hff00) joy_mmap(
-    clockgb, resetn,
-    address, indata, outdata, load, store,,
-    joy_indata, joy_outdata,, joy_store
+rrmmap #(16'hff00) joy_mmap (
+    .clockgb(clockgb),
+    .resetn(resetn),
+    .address(address),
+    .indata(indata),
+    .outdata(outdata),
+    .load(load),
+    .store(store),
+    .joy_indata(joy_indata),
+    .joy_outdata(joy_outdata),
+    .joy_store(joy_store)
 );
 
 endmodule
