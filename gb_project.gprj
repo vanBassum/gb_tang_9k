@@ -11,6 +11,7 @@
         <File path="src/div.v" type="file.verilog" enable="1"/>
         <File path="src/dma.v" type="file.verilog" enable="1"/>
         <File path="src/gowin_rom16/bootrom.v" type="file.verilog" enable="1"/>
+        <File path="src/gowin_sdpb/videoRam.v" type="file.verilog" enable="1"/>
         <File path="src/hdmi.v" type="file.verilog" enable="1"/>
         <File path="src/inthandle.v" type="file.verilog" enable="1"/>
         <File path="src/joypad.v" type="file.verilog" enable="1"/>

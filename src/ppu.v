@@ -62,15 +62,21 @@ hdmi #(4) display(
 wire [5:0] p_id;
 wire [15:0] p_color = gbm_color[1];
 
-vram vram(
-    .ppu_id(ppu_id),
-    .coords({y, x}),
-    .clock25mhz(clock25mhz),
-    .coords_valid({ppu_y[3], ppu_x[3]}),
-    .clockgb(clockgb),
-    .valid(ppu_y[3] < HEIGHT && lcdc[7]),
-    .p_id(p_id)
+videoRam vram (
+    .din(ppu_id),                           // A input [5:0] din
+    .ada({y, x}),                           // A input [15:0] address
+    .clka(clock25mhz),                      // A input clk
+    .cea(1'b1),                             // A clock enable
+            
+    .adb({ppu_y[3], ppu_x[3]}),             // B input [15:0] address
+    .clkb(clockgb),                         // B input clk
+    .ceb(ppu_y[3] < HEIGHT && lcdc[7]),     // B clock enable
+
+    .reseta(1'b0),                          // input reseta
+    .resetb(1'b0)                           // input resetb
 );
+
+
 
 reg [7:0] gbm_palette [3];
 reg [15:0] gbm_color [2];

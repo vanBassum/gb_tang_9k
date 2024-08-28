@@ -1,0 +1,17 @@
+[General]
+ipc_version=4
+file=videoRam
+module=videoRam
+target_device=gw1nr9c-004
+type=ram_sdpb
+version=1.0
+
+[Config]
+BYTE_SIZE=0
+DEPTH_A=65535
+DEPTH_B=65535
+LANG=0
+READ=0
+RESET_MODE=true
+WIDTH_A=6
+WIDTH_B=6
